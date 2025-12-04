@@ -1,0 +1,4 @@
+{
+  "python.defaultInterpreterPath": "../electoral-venv/bin/python",
+  "python.venvPath": ".."
+}
