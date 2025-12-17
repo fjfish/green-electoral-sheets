@@ -40,4 +40,18 @@ try:
     sheets.batch_update(body)
 except gspread.exceptions.APIError as MyError:
     print(MyError)
+    
+print("WORKED :)")
+
+name = "Master_Headers"
+
+requests = [{'updateNamedRange': {'fields': '*', 'namedRange': {'name': name, 'namedRangeId': lookup[name], 'range': {'sheetId': sheet.id, 'startColumnIndex': 1, 'endColumnIndex': 5, 'startRowIndex': 1, 'endRowIndex': 2}}}}]
+
+
+body = {"requests": requests}
+
+try:
+    sheets.batch_update(body)
+except gspread.exceptions.APIError as MyError:
+    print(MyError)
 
