@@ -9,7 +9,7 @@ if len(sys.argv) <= 1:
     print("Please area code")
     sys.exit()
     
-areas = sys.argv[1]
+areas = sys.argv[1:]
 
 for area in areas:
     reorder(area)

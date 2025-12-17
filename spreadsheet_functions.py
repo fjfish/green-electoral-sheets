@@ -303,7 +303,7 @@ def set_formating(sheet, headings, update_sheet, sheets):
     #print(name_ranges)
     current_name_ranges = sheets.list_named_ranges()
     #print(current_name_ranges)
-    #print(name_ranges)
+    print(name_ranges)
     exponential_backoff(set_named_ranges, sheets, name_ranges, dict([(x["name"], x["namedRangeId"]) for x in current_name_ranges]))
 
 def find_election_cols(headings):
@@ -353,9 +353,10 @@ def get_data_range(sheet, startColumnIndex = 0, endColumnIndex = None):
             }
             
 def set_named_ranges(sheets, name_ranges, named_range_ids_by_name):
+
     
-    for name, range_ in name_ranges:
-        requests = []
+    for name, range_ in name_ranges:      
+        requests = []  
         if name in named_range_ids_by_name:
             requests.append({
                   "updateNamedRange": {
@@ -376,8 +377,9 @@ def set_named_ranges(sheets, name_ranges, named_range_ids_by_name):
                       }
                   }
             })
-    body = {"requests": requests}
-    return sheets.batch_update(body)
+        body = {"requests": requests}
+        print(requests)
+        sheets.batch_update(body)
     
 def consent_formatting(sheets, sheet, col_index, required_col):
     requests = []
@@ -549,15 +551,15 @@ def dtest():
 def exponential_backoff(f, *args, **kwargs):
     try:
         return f(*args, **kwargs)
-    except gspread.exceptions.APIError as e:
-        print(f"Google API error...", e, dir(e))
+    except gspread.exceptions.APIError as myerror:
+        print(f"1Google API error...", myerror, myerror.response)
         exponential_backoff_delay(0, 0, f, *args, **kwargs)
 
 def exponential_backoff_delay(e, n, f, *args, **kwargs):
     sleep(2 ** e + random())
     try:
         return f(*args, **kwargs)
-    except gspread.exceptions.APIError:
+    except gspread.exceptions.APIError as myerror:
         print(f"Google API error...({e}) ... {datetime.now()}")
         if e < 6:
             e = e + 1
