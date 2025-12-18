@@ -7,6 +7,7 @@ SHEETS = {"E": ("1dQUTRqGoJSPZaHogOd2SlgsjDgFRG3RafuhWyHBYhk4", "Master"),
           "D": ("1XmleRCeqgwCgpaJLPzuuCz1yWYnBqF7OBeuKNgeDrK4", "Master"),
           "Q": ("1yA2KUMzQg-4GQRYtBtUQQ3S9Lax4H7E2R8rGQchjXXY", "Master"),
           "N": ("1xmQmD8OrfST2ZOkcmbhbAw8UgXWRWu8Hirohzt8kEno", "Master"),
+          "Test": ("1_HMUM6fbhD6P5696wbBpaAcIaLSB2jROfcBAddedjB8", "Master"),
           }
           #"D": ("13Bb_Ir44_pqNlwqiLzFfJW57uA_aQNho3yS6Y9opZ4A", "Master")} # Oxton
           
@@ -16,6 +17,7 @@ ROADSHEETS = {"Ccopy": ("1tOuZWe7yoSl7swFAiQ5CFQm1D8Aq-1PYyI1cBMwsxg8", "Address
               "D": ("1abfa6PXvIS0f54L1y7KTi9tdNb7YPU_AcX0DESqzGKE", "Addresses"),
               "Q": ("1OVydwrSVvvBtRSedbVuf69ZgwFQcoBYYGj6AhTWQ6ME", "Addresses"),
               "N": ("1eJyg_gfidbp5MFbx8QBhSN331tZkjHEoq___CjIEGBM", "Addresses"),
+              "Test": ("1HJSqGDmo2tZCufy5qRnN0GtLrjW8NmtxYOo1xzJIrA0", "Addresses"),
               }
           
 LOCAL_ELECTION = {"C": {"name": "LE23", "last": datetime(2023, 5, 4), "recent": ["MM24"]},
@@ -32,5 +34,6 @@ ROADS = {"B": [],
          "Ccopy": ["Park Road West"],
          "D": [],
          "Q": [],
-         "Q": []
+         "Q": [],
+         "Test": []
          } # Used where address lines contain a house and a road, but the house does not start with a digit.

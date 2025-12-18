@@ -300,11 +300,14 @@ def set_formating(sheet, headings, update_sheet, sheets):
     name_ranges.append(("Master_Election_Names", get_header_range(sheet, start_election_col, end_election_col)))
     name_ranges.append(("Master_Elections", get_data_range(sheet, start_election_col, end_election_col)))
     name_ranges.append(("Master_House_Road", get_data_range(sheet, headingLetterLookup["House"]-1, headingLetterLookup["House"] + 1)))
-    #print(name_ranges)
     current_name_ranges = sheets.list_named_ranges()
-    #print(current_name_ranges)
-    print(name_ranges)
-    exponential_backoff(set_named_ranges, sheets, name_ranges, dict([(x["name"], x["namedRangeId"]) for x in current_name_ranges]))
+    set_named_ranges_with_errors(sheets, 
+                                 name_ranges, 
+                                 dict([(x["name"], x["namedRangeId"]) 
+                                       for x 
+                                       in current_name_ranges
+                                       ])
+                                 )
 
 def find_election_cols(headings):
     start_election_col = None
@@ -352,11 +355,20 @@ def get_data_range(sheet, startColumnIndex = 0, endColumnIndex = None):
               "endRowIndex": sheet.row_count,
             }
             
-def set_named_ranges(sheets, name_ranges, named_range_ids_by_name):
-
-    
-    for name, range_ in name_ranges:      
-        requests = []  
+def set_named_ranges_with_errors(sheets, name_ranges, named_range_ids_by_name):
+    try: # Attempt to set all named ranges in one request
+        exponential_backoff(set_named_ranges, sheets, name_ranges, named_range_ids_by_name, max_n = 2)
+    except GoogleAPIException:
+        for name, range_ in name_ranges: # Attempt to set named ranges one at a time
+            try: 
+                exponential_backoff(set_named_ranges, sheets, [(name, range_)], named_range_ids_by_name, max_n = 4)
+            except GoogleAPIException:
+                print(f"Named Range could not be set.  Please manually set named range '{name}' to Master!{get_column_letter(range_['startColumnIndex'] + 1)}{range_['startRowIndex'] + 1}:{get_column_letter(range_['endColumnIndex'])}{range_['endRowIndex']} in https://docs.google.com/spreadsheets/d/{sheets.id}/edit")
+        
+            
+def set_named_ranges(sheets, name_ranges, named_range_ids_by_name):     
+    requests = []  
+    for name, range_ in name_ranges: 
         if name in named_range_ids_by_name:
             requests.append({
                   "updateNamedRange": {
@@ -377,9 +389,8 @@ def set_named_ranges(sheets, name_ranges, named_range_ids_by_name):
                       }
                   }
             })
-        body = {"requests": requests}
-        print(requests)
-        sheets.batch_update(body)
+    body = {"requests": requests}
+    sheets.batch_update(body)
     
 def consent_formatting(sheets, sheet, col_index, required_col):
     requests = []
@@ -548,14 +559,16 @@ def dtest():
             self.text = "Test"
     raise gspread.exceptions.APIError(r())
     
-def exponential_backoff(f, *args, **kwargs):
+class GoogleAPIException(Exception):
+    pass
+    
+def exponential_backoff(f, *args, max_n = 22, **kwargs):
     try:
         return f(*args, **kwargs)
     except gspread.exceptions.APIError as myerror:
-        print(f"1Google API error...", myerror, myerror.response)
-        exponential_backoff_delay(0, 0, f, *args, **kwargs)
+        exponential_backoff_delay(0, 0, f, *args, max_n = max_n, **kwargs)
 
-def exponential_backoff_delay(e, n, f, *args, **kwargs):
+def exponential_backoff_delay(e, n, f, *args, max_n = 22, **kwargs):
     sleep(2 ** e + random())
     try:
         return f(*args, **kwargs)
@@ -563,9 +576,9 @@ def exponential_backoff_delay(e, n, f, *args, **kwargs):
         print(f"Google API error...({e}) ... {datetime.now()}")
         if e < 6:
             e = e + 1
-        if n > 22:
-            raise Exception("Google API not accepted a request for ~20 minutes!")
-        exponential_backoff_delay(e, n + 1, f, *args, **kwargs)
+        if n > max_n:
+            raise GoogleAPIException("Google API not accepted a request.")
+        exponential_backoff_delay(e, n + 1, f, *args, max_n = max_n, **kwargs)
 
 def write_deleted_record(area, master_headings, new_deleted_records, deleted_date):
     sheet_id, sheet_name = SHEETS[area]
