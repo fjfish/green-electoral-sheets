@@ -51,3 +51,27 @@ The client_secrets.json file is typically required for authenticating with Googl
 ```
 python3 test_create_ward.py
 ```
+
+Get id's output and input them into `wirral_config.py`
+
+update_headings.py if sheet has no data in
+
+# Process
+
+If spreadsheet for a ward
+
+  Write resetXXX
+
+else
+
+  import annual update for specific ward
+
+end
+
+Now we have a sheet
+
+Run annual update once a year
+Import marked when election data
+Import marked postal when postal election
+
+If you get an internal API error go to the Electoral Data sheet, edit the named range Master_Headers so that it references the Master sheet instead of the Old... sheet
