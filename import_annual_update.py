@@ -48,7 +48,6 @@ class electorate(object):
             self.middle_initials = names[2].lower().strip()
             self.surname = names[0].lower().strip()
         else:
-            
             forename_initials = self.d["Elector Forename"].strip().split(" ", 1)
             self.forename = forename_initials[0].lower().strip()
             if len(forename_initials) > 1:
@@ -56,6 +55,7 @@ class electorate(object):
             else:
                 self.middle_initials = ""
             self.surname = self.d["Elector Surname"].lower().strip()
+            self.d["Elector Name"] = self.d["Elector Forename"] + " " + self.d["Elector Surname"]
     
 new_electorate = []
 address_name_lookup = {}
