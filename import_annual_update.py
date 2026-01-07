@@ -156,4 +156,4 @@ for area in wards:
         
         write_deleted_record(area, headings, deleted_records, added_date)
         
-    write_record(area, headings, new_records)
+        write_record(area, headings, new_records)
