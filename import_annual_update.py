@@ -6,6 +6,8 @@ from datetime import datetime, date
 from wirral_config import *
 from thefuzz import fuzz
 
+DEBUG = True
+
 
 
 if len(sys.argv) < 3:
@@ -145,12 +147,13 @@ for area in wards:
         new_matched.append(new)
     
     #Write data back
-    new_records = [n.d for n in new_matched]
-    for record in new_records:
-        make_electoral_number(record, year)
+    if not DEBUG:
+        new_records = [n.d for n in new_matched]
+        for record in new_records:
+            make_electoral_number(record, year)
         
-    deleted_records = [n.d for n in old_electorate]
+        deleted_records = [n.d for n in old_electorate]
         
-    write_deleted_record(area, headings, deleted_records, added_date)
+        write_deleted_record(area, headings, deleted_records, added_date)
         
     write_record(area, headings, new_records)
