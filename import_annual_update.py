@@ -41,11 +41,21 @@ class electorate(object):
         self.address = "@".join([str(self.d["Address%i" % i]).strip().lower() for i in range(1,7)])
         if "Elector Surname Elector Forename" in d.keys():
             self.d["Elector Name"] = self.d["Elector Surname Elector Forename"]
-        names = self.d["Elector Name"].strip().split(" ", 2)
-        names = names + ["" for i in range(max(0, 3 - len(names)))]
-        self.forename = names[1].lower().strip()
-        self.middle_initials = names[2].lower().strip()
-        self.surname = names[0].lower().strip()
+        if "Elector Name" in d.keys():
+            names = self.d["Elector Name"].strip().split(" ", 2)
+            names = names + ["" for i in range(max(0, 3 - len(names)))]
+            self.forename = names[1].lower().strip()
+            self.middle_initials = names[2].lower().strip()
+            self.surname = names[0].lower().strip()
+        else:
+            
+            forename_initials = self.d["Elector Forename"].strip().split(" ", 1)
+            self.forename = forename_initials[0].lower().strip()
+            if len(forename_initials) > 1:
+                self.middle_initials = forename_initials[1].lower().strip()
+            else:
+                self.middle_initials = ""
+            self.surname = self.d["Elector Surname"].lower().strip()
     
 new_electorate = []
 address_name_lookup = {}
