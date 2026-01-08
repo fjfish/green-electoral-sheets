@@ -12,23 +12,18 @@ These are very rough notes
 ## 1. Create it
 
 ```
-python3 -m venv ../electoral-venv
+python -m venv ../electoral-venv
 ```
 
 ## 2. Populate it
 
-Follow the instructions
-
 ```
-pip install google_auth_oauthlib
-pip install google-api-python-client
-pip install pydrive
-pip install gspread
+pip install --upgrade -r requirements.txt
 ```
 
 # App credentials
 
-Can't remember how we got this file, but it's somewhere in the app settings. 
+Can't remember how we got this file, but it's somewhere in the app settings in the google cloud console. 
 
 # Client secrets file
 
@@ -49,7 +44,7 @@ The client_secrets.json file is typically required for authenticating with Googl
 # Running the test ward file
 
 ```
-python3 test_create_ward.py
+python test_create_ward.py
 ```
 
 Get id's output and input them into `wirral_config.py`
