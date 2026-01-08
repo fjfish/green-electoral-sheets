@@ -113,10 +113,10 @@ for area in wards:
         old_electorate.append(electorate(old_result))
     
     copy_keys = headings.copy()
-    for unused_keys in ["Elector Number", "Elector Markers", "Elector DOB", "Elector Name"] + \
+    for unused_key in ["Elector Number", "Elector Markers", "Elector DOB", "Elector Name"] + \
                        ["Address1", "Address2", "Address3", "Address4", "Address5", "Address6"] + \
-                       ["Postcode", "House", "Road", "Round", "LE Knock Priority", "GE Knock Priority"]:
-        copy_keys.remove(unused_keys)
+                       ["Postcode", "House", "Road", "Round"]:
+        copy_keys.remove(unused_key)
 
     new_matched = []
     full_match_address = set()
