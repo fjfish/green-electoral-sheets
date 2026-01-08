@@ -69,6 +69,9 @@ MEDIUMS_RECORDS =  [("Email", "Email", "=EmailConsentTemplates"),
                     ("Landline", "Landline", "=LandlineConsentTemplates"), 
                     ("Mobile", "Mobile", "=MobileConsentTemplates"), 
                     ("WhatsApp", "Mobile", "=WhatsAppConsentTemplates")]
+                    
+DEBUG = True
+MAX_GOOGLE_RETRIES = {True: 1, False: 20}[DEBUG]
 
 def get_client():
     scopes = [
@@ -562,13 +565,13 @@ def dtest():
 class GoogleAPIException(Exception):
     pass
     
-def exponential_backoff(f, *args, max_n = 22, **kwargs):
+def exponential_backoff(f, *args, max_n = MAX_GOOGLE_RETRIES, **kwargs):
     try:
         return f(*args, **kwargs)
     except gspread.exceptions.APIError as myerror:
         exponential_backoff_delay(0, 0, f, *args, max_n = max_n, **kwargs)
 
-def exponential_backoff_delay(e, n, f, *args, max_n = 22, **kwargs):
+def exponential_backoff_delay(e, n, f, *args, max_n = MAX_GOOGLE_RETRIES, **kwargs):
     sleep(2 ** e + random())
     try:
         return f(*args, **kwargs)
