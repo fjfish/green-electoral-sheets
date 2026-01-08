@@ -6,7 +6,7 @@ from datetime import datetime, date
 from wirral_config import *
 from thefuzz import fuzz
 
-DEBUG = True
+DEBUG = False
 
 
 
@@ -55,7 +55,7 @@ class electorate(object):
             else:
                 self.middle_initials = ""
             self.surname = self.d["Elector Surname"].lower().strip()
-            self.d["Elector Name"] = self.d["Elector Forename"] + " " + self.d["Elector Surname"]
+            self.d["Elector Name"] = self.d["Elector Surname"] + " " + self.d["Elector Forename"]
     
 new_electorate = []
 address_name_lookup = {}

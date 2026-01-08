@@ -589,14 +589,14 @@ def write_deleted_record(area, master_headings, new_deleted_records, deleted_dat
     sheet = sheets.worksheet("Deleted Electors")   
     deleted_headings = sheet.get('A1:1')[0]
     deleted_date_and_master_headings = ["Deleted Date"] + master_headings
-    print (deleted_headings)
+    print(deleted_headings)
     print(deleted_date_and_master_headings)
     for deleted_heading in deleted_headings:
         assert deleted_heading in deleted_date_and_master_headings, 'In Deleted Electors worksheet, "%s" heading does not exist in the Master sheet.  Please apply the changes that were made to Master to the Deleted Electors sheet.' % deleted_heading
     current_deleted_records = sheet.get_all_records()
     sheet.clear()
     sheet.update([deleted_date_and_master_headings], 'A1')
-    sheet.update([[deleted_date] + [record[h] for h in master_headings] for record in current_deleted_records] + \
+    sheet.update([[deleted_date] + [record.get(h, "") for h in master_headings] for record in current_deleted_records] + \
                  [[deleted_date] + [record[h] for h in master_headings] for record in new_deleted_records], 'A2', raw=False)
 
 class UnknownAreaException(Exception):
