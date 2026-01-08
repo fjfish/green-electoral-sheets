@@ -1,3 +1,10 @@
+# Jobs to run
+
+* Generate ward sheets
+* Run annual update once a year
+* Import marked when election data
+* Import marked postal when postal election
+
 # How to run create wards file
 
 ## Running the test ward file
@@ -23,10 +30,6 @@ else
 end
 
 Now we have a sheet
-
-Run annual update once a year
-Import marked when election data
-Import marked postal when postal election
 
 If you get an internal API error go to the Electoral Data sheet, edit the named range Master_Headers so that it references the Master sheet instead of the Old... sheet
 
