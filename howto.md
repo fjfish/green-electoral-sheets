@@ -44,4 +44,14 @@ python import_annual_update.py CB.csv 25-26 01/12/2025 B
 #       ^job                   ^file  ^period.          ^ward (blank for all)
 #                                            ^ date data was released (British format)   
 ```
+## Testing
+
+1. Create copy of Electoral Data sheet
+2. Allow your Google project account to update the master and deleted protected data
+3. If they exist in deleted tab remove LE Knock priority and GE Knock Priority columns
+4. Add your project ID to `spreadsheet_functions.py` line 551, `protectSheet` function. 
+5. Go to round houses tab and allow access
+
+Change `import_annual_update.py` line to use your copy file.
+
 
