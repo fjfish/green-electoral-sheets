@@ -28,7 +28,7 @@ def add(code, electorNumber):
     results[code].add(electorNumber)
 
 for filename in filenames:
-    with open(filename) as resultsCSV:
+    with open(filename, encoding="utf-8-sig") as resultsCSV:
         GEreader = csv.reader(resultsCSV, delimiter=',')
         for a, b, elector_id in GEreader:
             no_suffix_match = NO_SUFFIX_REGEX.match(elector_id)

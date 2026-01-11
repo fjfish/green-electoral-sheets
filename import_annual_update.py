@@ -59,7 +59,7 @@ class electorate(object):
     
 new_electorate = []
 address_name_lookup = {}
-with open(csv_filename) as newcsvfile:
+with open(csv_filename, encoding="utf-8-sig") as newcsvfile:
     new_reader = csv.DictReader(newcsvfile, delimiter=',')
     for row in new_reader:
         if row["Elector DOB"] != "":

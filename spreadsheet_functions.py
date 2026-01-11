@@ -546,7 +546,10 @@ def protectSheet(sheets, sheet, unprotected_cols):
                         "unprotectedRanges": unprotectedRanges,
                         "editors": {
                             "domainUsersCanEdit": False,
-                            "users": "mjg-python@wirral-green-party-data.iam.gserviceaccount.com"
+                            "users": [
+                                "mjg-python@wirral-green-party-data.iam.gserviceaccount.com",
+                                "fjf-green@green-party-data.iam.gserviceaccount.com"
+                            ]
                         },
                         "warningOnly": False
                     }
