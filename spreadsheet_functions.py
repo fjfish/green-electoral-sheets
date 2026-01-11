@@ -61,7 +61,7 @@ COLUMN_WIDTHS = {"Given Name": 80,
                  "Recorded By - Consent - Email": 105}
 COLUMN_WIDTH_DEFAULT = 60    
 
-DATE_HEADERS = ["Elector DOB", "Added Date", "Poster Request Date", "Board Request Date", "DNC Date", "DND Date", "Date - Consent - Email", "Date - Consent - Mobile", "Date - Consent - WhatsApp", "Date - Consent - Landline"]
+DATE_HEADERS = ["Elector DOB", "Added Date", "Poster Request Date", "Board Request Date", "DNC Date", "DND Date", "Date - Consent - Email", "Date - Consent - Mobile", "Date - Consent - WhatsApp", "Date - Consent - Landline", "Last Contact"]
 
 BOOL = {"TRUE": True, "FALSE": False, True: True, False: False, "": False}
 
